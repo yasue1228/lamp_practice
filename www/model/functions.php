@@ -1,47 +1,47 @@
 <?php
-
+// デバック関数
 function dd($var){
   var_dump($var);
   exit();
 }
-
+// リダイレクト関数
 function redirect_to($url){
   header('Location: ' . $url);
   exit;
 }
-
+// 値をGETで取得する関数
 function get_get($name){
   if(isset($_GET[$name]) === true){
     return $_GET[$name];
   };
   return '';
 }
-
+// 値をPOSTで取得する関数
 function get_post($name){
   if(isset($_POST[$name]) === true){
     return $_POST[$name];
   };
   return '';
 }
-
+// ファイルの値を取得する関数
 function get_file($name){
   if(isset($_FILES[$name]) === true){
     return $_FILES[$name];
   };
   return array();
 }
-
+// セッションの値を取得する関数
 function get_session($name){
   if(isset($_SESSION[$name]) === true){
     return $_SESSION[$name];
   };
   return '';
 }
-
+// 取得した変数をセッションにセットする関数
 function set_session($name, $value){
   $_SESSION[$name] = $value;
 }
-
+// セッション処理のエラー関数
 function set_error($error){
   $_SESSION['__errors'][] = $error;
 }
