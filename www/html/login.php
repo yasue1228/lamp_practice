@@ -10,5 +10,7 @@ if(is_logined() === true){
   // ログインしていた場合ホームページにリダイレクトする
   redirect_to(HOME_URL);
 }
+// トークンの取得
+$token = get_csrf_token();
 // ログインページのテンプレートを読み込む
 include_once VIEW_PATH . 'login_view.php';

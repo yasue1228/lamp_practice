@@ -24,5 +24,7 @@ $user = get_login_user($db);
 $carts = get_user_carts($db, $user['user_id']);
 // 購入金額の合計を合計額計算関数から取得する
 $total_price = sum_carts($carts);
+// トークンを生成して取得
+$token = get_csrf_token();
 // カート一覧テンプレートファイルを読み込む
 include_once VIEW_PATH . 'cart_view.php';

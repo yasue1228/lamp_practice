@@ -15,7 +15,17 @@ if(is_logined() === false){
   // ログインがされていない場合はログインページにリダイレクトする
   redirect_to(LOGIN_URL);
 }
+
+// トークンのチェック
+$token = get_post('token');
+if(is_valid_csrf_token($token) === false){
+  redirect_to(LOGIN_URL);
+}
+// セッションに保存されたトークン情報を削除する
+unset($_SESSION['csrf_token']);
+
 // DBを取得
+
 $db = get_db_connect();
 // DBを利用してユーザーデータを取得
 $user = get_login_user($db);

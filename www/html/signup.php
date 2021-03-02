@@ -10,6 +10,8 @@ if(is_logined() === true){
   // ホームページへリダイレクトする
   redirect_to(HOME_URL);
 }
+// トークンの取得
+$token = get_csrf_token();
 // サインアップページテンプレートを読み込む
 include_once VIEW_PATH . 'signup_view.php';
 

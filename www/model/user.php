@@ -52,7 +52,7 @@ function get_login_user($db){
 
   return get_user($db, $login_user_id);
 }
-
+// ユーザー情報を新規登録する関数
 function regist_user($db, $name, $password, $password_confirmation) {
   if( is_valid_user($name, $password, $password_confirmation) === false){
     return false;
@@ -71,7 +71,7 @@ function is_valid_user($name, $password, $password_confirmation){
   $is_valid_password = is_valid_password($password, $password_confirmation);
   return $is_valid_user_name && $is_valid_password ;
 }
-
+// 有効なユーザー名か確認する関数
 function is_valid_user_name($name) {
   $is_valid = true;
   if(is_valid_length($name, USER_NAME_LENGTH_MIN, USER_NAME_LENGTH_MAX) === false){
@@ -84,7 +84,7 @@ function is_valid_user_name($name) {
   }
   return $is_valid;
 }
-
+// 有効なパスワードがチェックする関数
 function is_valid_password($password, $password_confirmation){
   $is_valid = true;
   if(is_valid_length($password, USER_PASSWORD_LENGTH_MIN, USER_PASSWORD_LENGTH_MAX) === false){
@@ -101,7 +101,7 @@ function is_valid_password($password, $password_confirmation){
   }
   return $is_valid;
 }
-
+// データベースにユーザー情報を書き込む関数
 function insert_user($db, $name, $password){
   $sql = "
     INSERT INTO

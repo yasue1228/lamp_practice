@@ -20,5 +20,7 @@ $db = get_db_connect();
 $user = get_login_user($db);
 // データベースから商品情報を取得する
 $items = get_open_items($db);
+// トークンの取得
+$token = get_csrf_token();
 // 商品一覧テンプレートを読み込む
 include_once VIEW_PATH . 'index_view.php';

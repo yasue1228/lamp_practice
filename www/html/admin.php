@@ -25,5 +25,9 @@ if(is_admin($user) === false){
 }
 // データベースのアイテム情報を$itemに代入する
 $items = get_all_items($db);
+
+// トークンの取得
+$token = get_csrf_token();
+
 // 管理者ページファイルを読み込む
 include_once VIEW_PATH . '/admin_view.php';
