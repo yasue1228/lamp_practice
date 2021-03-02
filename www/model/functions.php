@@ -41,11 +41,11 @@ function get_session($name){
 function set_session($name, $value){
   $_SESSION[$name] = $value;
 }
-// セッション処理のエラー関数
+// 受け取ったセッション処理のエラー関数
 function set_error($error){
   $_SESSION['__errors'][] = $error;
 }
-
+// 
 function get_errors(){
   $errors = get_session('__errors');
   if($errors === ''){
@@ -71,11 +71,11 @@ function get_messages(){
   set_session('__messages',  array());
   return $messages;
 }
-
+// ログインしているかチェックする関数
 function is_logined(){
   return get_session('user_id') !== '';
 }
-
+// ファイルネームを取得する関数
 function get_upload_filename($file){
   if(is_valid_upload_image($file) === false){
     return '';
@@ -84,15 +84,16 @@ function get_upload_filename($file){
   $ext = PERMITTED_IMAGE_TYPES[$mimetype];
   return get_random_string() . '.' . $ext;
 }
-
+// ２０文字ランダムの名前を生成する関数
 function get_random_string($length = 20){
   return substr(base_convert(hash('sha256', uniqid()), 16, 36), 0, $length);
 }
-
+// 画像を保存する関数
 function save_image($image, $filename){
+  // アップロードされたファイルを指定ディレクトリに移動して保存
   return move_uploaded_file($image['tmp_name'], IMAGE_DIR . $filename);
 }
-
+// 画像を削除する関数
 function delete_image($filename){
   if(file_exists(IMAGE_DIR . $filename) === true){
     unlink(IMAGE_DIR . $filename);
@@ -121,7 +122,7 @@ function is_valid_format($string, $format){
   return preg_match($format, $string) === 1;
 }
 
-
+// 画像をアップロードできるかチェックする関数
 function is_valid_upload_image($image){
   if(is_uploaded_file($image['tmp_name']) === false){
     set_error('ファイル形式が不正です。');
@@ -139,3 +140,22 @@ function h($h){
   $h = htmlspecialchars($h,ENT_QUOTES,'UTF-8');
   return $h;
 }
+
+// トークンの生成
+function get_csrf_token(){
+  // get_random_string()はユーザー定義関数。
+  $token = get_random_string(30);
+  // set_session()はユーザー定義関数。
+  set_session('csrf_token', $token);
+  return $token;
+}
+
+// トークンのチェック
+function is_valid_csrf_token($token){
+  if($token === '') {
+    return false;
+  }
+  // get_session()はユーザー定義関数
+  return $token === get_session('csrf_token');
+}
+

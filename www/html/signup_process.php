@@ -12,6 +12,14 @@ if(is_logined() === true){
   // ログインしている場合はホームページへリダイレクトする
   redirect_to(HOME_URL);
 }
+// 受け取ったトークンのチェック
+$token = get_post('token');
+if(is_valid_csrf_token($token) === false){
+  redirect_to(LOGIN_URL);
+}
+// セッションに保存されたトークン情報を削除する
+unset($_SESSION['csrf_token']);
+
 // ポストで取得した'name'を$nameに代入
 $name = get_post('name');
 // ポストで取得した'password'を$passwordに代入
