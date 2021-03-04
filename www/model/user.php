@@ -37,7 +37,7 @@ function get_user_by_name($db, $name){
 
   return fetch_query($db, $sql,array(':name'=>$name));
 }
-
+// ログインするときのチェック関数
 function login_as($db, $name, $password){
   $user = get_user_by_name($db, $name);
   if($user === false || $user['password'] !== $password){
@@ -46,7 +46,7 @@ function login_as($db, $name, $password){
   set_session('user_id', $user['user_id']);
   return $user;
 }
-
+// ログインするユーザを取得する関数
 function get_login_user($db){
   $login_user_id = get_session('user_id');
 
@@ -60,11 +60,11 @@ function regist_user($db, $name, $password, $password_confirmation) {
   
   return insert_user($db, $name, $password);
 }
-
+// 管理者関数
 function is_admin($user){
   return $user['type'] === USER_TYPE_ADMIN;
 }
-
+// 有効なユーザーか確認する関数
 function is_valid_user($name, $password, $password_confirmation){
   // 短絡評価を避けるため一旦代入。
   $is_valid_user_name = is_valid_user_name($name);
