@@ -39,3 +39,59 @@ function dateils($db,$cart,$order_id){
         ";
         return execute_query($db, $sql, array('item_id'=>$cart['item_id'],':item_price'=>$cart['price'],':amount'=>$cart['amount'],':order_id'=>$order_id));
 }
+
+function get_purchase_history($db,$user_id){
+    $sql = "
+    SELECT
+    order_id,
+    purchase_date,
+    total_price
+    FROM
+    purchase_history
+    WHERE
+    user_id = :user_id
+    ORDER BY
+    purchase_date DESC
+    ";
+
+    return fetch_all_query($db,$sql,array(':user_id'=>$user_id));
+   
+}
+
+function get_all_purchase_history($db){
+    $sql = "
+    SELECT
+    order_id,
+    purchase_date,
+    total_price
+    FROM
+    purchase_history
+    ORDER BY
+    purchase_date DESC
+    ";
+
+    return fetch_all_query($db,$sql);
+   
+}
+
+function get_purchase_details($db,$order_id){
+    $sql = "
+    SELECT
+    purchase_details.item_id,
+    items.name,
+    purchase_details.item_price,
+    purchase_details.amount
+    FROM
+    purchase_details
+    INNER JOIN
+    items
+    ON
+    purchase_details.item_id = items.item_id
+    WHERE
+    purchase_details.order_id = :order_id
+    ";
+    return fetch_all_query($db,$sql,array('order_id'=>$order_id));
+}
+
+
+
