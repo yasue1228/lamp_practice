@@ -19,7 +19,26 @@ $db = get_db_connect();
 // データベースからログインしたユーザー情報を取得
 $user = get_login_user($db);
 // データベースから商品情報を取得する
-$items = get_open_items($db);
+// $items = get_open_items($db);
+$sort = get_get('sort');
+// 表示順を変更する
+
+  // 新着順で表示する
+  if($sort === 'new_arrival_order'){
+    $items = sorting_new_arrival_order($db);
+    // 価格が安い順に表示する
+  }else if($sort === 'cheapest_first'){
+    $items = sorting_cheapest_first($db);
+    // 価格が高い順に表示する
+  }else if($sort === 'highest_first'){
+    $items = sorting_higest_first($db);
+  }else{
+    $sort = 'new_arrinal_order';
+    $items = sorting_new_arrival_order($db);
+  }
+
+
+
 // トークンの取得
 $token = get_csrf_token();
 // 商品一覧テンプレートを読み込む

@@ -145,6 +145,64 @@ function delete_item($db, $item_id){
   return execute_query($db, $sql,array(':item_id'=>$item_id));
 }
 
+// 商品の並び替え機能　新着順
+function sorting_new_arrival_order($db){
+  $sql = '
+  SELECT
+  item_id, 
+  name,
+  stock,
+  price,
+  image,
+  status,
+  created
+  FROM
+  items
+  WHERE status = 1
+  ORDER BY 
+  created DESC
+  ';
+  return fetch_all_query($db,$sql);
+}
+
+// 商品の並び替え機能　安い順
+function sorting_cheapest_first($db){
+  $sql = '
+  SELECT
+  item_id, 
+  name,
+  stock,
+  price,
+  image,
+  status,
+  created
+  FROM
+  items
+  WHERE status = 1
+  ORDER BY
+  price ASC
+  ';
+  return fetch_all_query($db,$sql);
+}
+// 商品の並び替え　高い順に並べる
+function sorting_higest_first($db){
+  $sql = '
+  SELECT
+  item_id, 
+  name,
+  stock,
+  price,
+  image,
+  status,
+  created
+  FROM
+  items
+  WHERE status = 1
+  ORDER BY
+  price DESC
+  ';
+  return fetch_all_query($db,$sql);
+}
 
 // 非DB
 // ステータスが１のアイテム関数
