@@ -18,6 +18,14 @@
     <h1>商品一覧</h1>
     <?php include VIEW_PATH . 'templates/messages.php'; ?>
 
+    <form method="get" action="index.php">
+        <select name ="sort">
+          <option value="new_arrival_order" <?php if($sort==='new_arrival_order'){ print 'selected';} ?>>新着順</option>
+          <option value="cheapest_first" <?php if($sort==='cheapest_first'){ print 'selected';} ?>>価格の安い順</option>
+          <option value="higest_first" <?php if($sort==='higest_first'){ print 'selected';} ?>>価格の高い順</option>
+        </select>
+        <input type="submit" name="sort_select" class="btn btn-primary sort" value="並び替える">
+      </form>
     <div class="card-deck">
       <div class="row">
       <?php foreach($items as $item){ ?>
@@ -47,6 +55,5 @@
       </div>
     </div>
   </div>
-  
 </body>
 </html>
